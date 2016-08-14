@@ -14,3 +14,18 @@
 Route::get('/', function () {
     return view('welcome');
 });
+// to login
+Route::get('/login', function(){
+    return view('login');
+});
+Route::post('/login', 'StudentController@doLogin' );
+
+// to register the user
+Route::get('/register', function(){
+    return view('register');
+});
+Route::post('/register', 'StudentController@AddNewStudent' );
+
+// to logout
+Route::auth();
+Route::get('/logout', 'StudentController@Logout' );
