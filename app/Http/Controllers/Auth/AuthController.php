@@ -88,8 +88,8 @@ class AuthController extends Controller
      */
     public function authenticate(array $data)
     {
-        echo "wahts wrong";
-        if (Auth::attempt(['usn' => $data['usn'], 'password' => $data['password']], $remember)) {
+        if (Auth::attempt(['usn' => $data['usn'], 'password' => $data['password']], $remember))
+        {
             // Authentication passed...
             return redirect()->intended('dashboard');
         }
@@ -99,7 +99,7 @@ class AuthController extends Controller
     public function doLogin(Request $request)
     {
       // Validate the request...
-      echo "in doLogin";
+      echo "doLogin";
       $validator = Validator::make($request->all(), [
               'usn' => 'required',
               'password' => 'required|min:6'
