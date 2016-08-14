@@ -105,7 +105,8 @@ class AuthController extends Controller
               'password' => 'required|min:6'
           ]);
           // if validation fails send back to login page
-          if ($validator->fails()) {
+          if ($validator->fails())
+          {
               echo "fail";
               //return redirect('/login')
                         //  ->withErrors($validator)
