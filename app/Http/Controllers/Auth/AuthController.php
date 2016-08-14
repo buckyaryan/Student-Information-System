@@ -86,12 +86,18 @@ class AuthController extends Controller
      * @param  array  $data
      * @return User
      */
+
     public function authenticate(array $data)
     {
         if (Auth::attempt(['usn' => $data['usn'], 'password' => $data['password']], $remember))
         {
             // Authentication passed...
-            return redirect()->intended('dashboard');
+            return redirect('/profile');//->intended('dashboard');
+        }
+        else
+        {
+            return redirect('/login')
+                      ->withInput();
         }
     }
 
@@ -136,4 +142,5 @@ class AuthController extends Controller
         //                ->withInput();
       }
     }
+    
 }

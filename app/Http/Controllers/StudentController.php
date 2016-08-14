@@ -58,6 +58,7 @@ class StudentController extends Controller
   //return redirect('/profile');
   }
 
+
   // to login the user into the system
   public function doLogin(Request $request)
   {
@@ -76,29 +77,30 @@ class StudentController extends Controller
         }
     //do login
     $user = Student::where('usn', $request->usn);
-    echo "$user->password";
+  //  echo "$user->password";
 
-    if (Auth::attempt(['usn' => $request->usn, 'password' => $request->password], $remember))
+    if (Auth::attempt(['usn' => $request->usn, 'password' => $request->password]))
     {
         //$value = $request->session()->put('id',$user->id);
         echo "logged in";
 
         $user = Student::where('usn', $request->usn)->get();
-        echo $user->id;
+        //echo $user->id;
 
-        session(['key' => $user->id]);
+        //session(['key' => $user->id]);
 
-        //return redirect('/profile');
+        return redirect('/profile');
     }
     else
     {
-        echo "failed";
-      //  return redirect('/login')
-      //                ->withErrors($user)
-      //                ->withInput();
+        //echo "failed";
+        return redirect('/login')
+                      ->withErrors($request)
+                      ->withInput();
     }
 
   }
+
 
   // function to logout
   public function Logout()

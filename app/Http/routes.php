@@ -15,10 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 // to login
-Route::get('/login', function(){
-    return view('login');
+Route::get('/student/login', function(){
+    return view('studentlogin');
 });
-Route::post('/login', 'StudentController@doLogin' );
+Route::post('/student/login', 'StudentController@doLogin' );
 
 // to register the user
 Route::get('/register', function(){
