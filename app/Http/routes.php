@@ -29,3 +29,9 @@ Route::post('/register', 'StudentController@AddNewStudent' );
 // to logout
 Route::auth();
 Route::get('/logout', 'StudentController@Logout' );
+
+// to register the user
+Route::auth();
+Route::get('/dashboard', function(){
+    return view('dashboard');
+});
