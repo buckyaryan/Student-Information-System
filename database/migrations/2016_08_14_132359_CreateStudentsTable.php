@@ -14,13 +14,13 @@ class CreateStudentsTable extends Migration
   {
     Schema::create('students', function (Blueprint $table) {
         $table->increments('id');
-        $table->string('usn')->unique();
-        $table->string('name');
-        $table->string('email')->unique();
+        $table->string('usn',10)->unique();
+        $table->string('name',50);
+        $table->string('email',50)->unique();
         $table->string('password');
         $table->integer('semester');
         $table->integer('phone')->unique();
-        $table->text('adderss');
+        $table->text('address',255);
         $table->rememberToken();
         $table->timestamps();
     });

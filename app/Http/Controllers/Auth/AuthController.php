@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use App\Student;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-
+use Auth;                                                            // to authenticate the user for login
 class AuthController extends Controller
 {
     /*
@@ -28,7 +28,9 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/home';
+
+    protected $redirectAfterLogout = '/login';
 
     /**
      * Create a new authentication controller instance.
@@ -52,6 +54,10 @@ class AuthController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
+            'usn' => 'required|max:10|unique:students',
+            'phone' => 'required|min:10|max:20|unique:students',
+            'address' => 'required|max:255',
+            'semester' => 'required',
         ]);
     }
 
@@ -63,10 +69,70 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        return Student::create([
+            'usn' => $data['usn'],
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'semester' => $data['semester'],
+            'phone' =>$data['phone'],
+            'address' => $data['address'],
         ]);
+    }
+
+    /**
+     * user login.
+     *
+     * @param  array  $data
+     * @return User
+     */
+    public function authenticate(array $data)
+    {
+        echo "wahts wrong";
+        if (Auth::attempt(['usn' => $data['usn'], 'password' => $data['password']], $remember)) {
+            // Authentication passed...
+            return redirect()->intended('dashboard');
+        }
+    }
+
+    // to login the user into the system
+    public function doLogin(Request $request)
+    {
+      // Validate the request...
+      echo "in doLogin";
+      $validator = Validator::make($request->all(), [
+              'usn' => 'required',
+              'password' => 'required|min:6'
+          ]);
+          // if validation fails send back to login page
+          if ($validator->fails()) {
+              echo "fail";
+              //return redirect('/login')
+                        //  ->withErrors($validator)
+                      //    ->withInput(Input::except('password'));
+          }
+      //do login
+      $user = Student::where('usn', $request->usn);
+      echo "$user->password";
+
+      if (Auth::attempt(['usn' => $request->usn, 'password' => $request->password], $remember))
+      {
+          //$value = $request->session()->put('id',$user->id);
+          echo "logged in";
+
+          $user = Student::where('usn', $request->usn)->get();
+          echo $user->id;
+
+          session(['key' => $user->id]);
+
+          //return redirect('/profile');
+      }
+      else
+      {
+          echo "failed";
+        //  return redirect('/login')
+        //                ->withErrors($user)
+        //                ->withInput();
+      }
     }
 }

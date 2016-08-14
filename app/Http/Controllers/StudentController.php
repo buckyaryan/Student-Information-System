@@ -27,7 +27,7 @@ class StudentController extends Controller
           'email' => 'required|email|max:255|unique:students',
           'password' => 'required|min:6|confirmed',
           'usn' => 'required|max:10|unique:students',
-          'phone' => 'required|min:10|max:20|unique:students'
+          'phone' => 'required|min:10|max:20|unique:students',
           'address' => 'required|max:255',
       ]);
       // if validation fails send back to register page
@@ -37,7 +37,7 @@ class StudentController extends Controller
                       ->withInput();
       }
   // storing the data
-  $user = new Students;
+  $user = new Student;
 
   // getting the users data
   $user->name = $request->name;
@@ -62,21 +62,23 @@ class StudentController extends Controller
   public function doLogin(Request $request)
   {
     // Validate the request...
+    echo "in doLogin";
     $validator = Validator::make($request->all(), [
             'usn' => 'required',
             'password' => 'required|min:6'
         ]);
         // if validation fails send back to login page
         if ($validator->fails()) {
-            return redirect('/login')
-                        ->withErrors($validator)
-                        ->withInput();
+            echo "fail";
+            //return redirect('/login')
+                      //  ->withErrors($validator)
+                    //    ->withInput();
         }
     //do login
     $user = Student::where('usn', $request->usn);
-    //echo "$user->password";
+    echo "$user->password";
 
-    if (Auth::attempt(['usn' => $request->usn, 'password' => $request->password]))
+    if (Auth::attempt(['usn' => $request->usn, 'password' => $request->password], $remember))
     {
         //$value = $request->session()->put('id',$user->id);
         echo "logged in";
@@ -86,14 +88,14 @@ class StudentController extends Controller
 
         session(['key' => $user->id]);
 
-        return redirect('/profile');
+        //return redirect('/profile');
     }
     else
     {
-        //echo "failed";
-        return redirect('/login')
-                      ->withErrors($user)
-                      ->withInput();
+        echo "failed";
+      //  return redirect('/login')
+      //                ->withErrors($user)
+      //                ->withInput();
     }
 
   }
@@ -115,3 +117,5 @@ class StudentController extends Controller
     return view('about',['user'=>$user]);
   //
   }
+
+}
