@@ -113,12 +113,10 @@ class StudentController extends Controller
   }
 
   // function to show the profile of the Student
-  public function showProfile(Request $request)
+  public function ShowProfile(Request $request)
   {
-    $value = session('key');
-    //echo "$value";
-    $user = Student::where('id', session('key'));
-    return view('about',['user'=>$user]);
+    $user = Auth::user();
+    return view('profile',['user'=>$user]);
   //
   }
 
@@ -126,8 +124,6 @@ class StudentController extends Controller
   public function EditProfile(Request $request)
   {
     $user = Auth::user();
-    //var_dump($user);
-    //echo $user->usn;
     return view('profile',['user'=>$user]);
   }
 
