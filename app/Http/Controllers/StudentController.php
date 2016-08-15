@@ -147,22 +147,12 @@ class StudentController extends Controller
                       ->withErrors($validator)
                       ->withInput();
       }
-  // storing the data
-  $user = new Student;
-
-  // getting the users data
-  $user->name = $request->name;
-  $user->usn = $request->usn;
-  $user->email = $request->email;
-  $user->phone = $request->phone;
-  $user->semester = $request->semester;
-  $user->address = $request->address;
-
-  $cuser = Auth::user();
+  // getting logged in user id to update its data
+  $user = Auth::user();
   //saving the data into table
   DB::table('students')
-            ->where('id')
-            ->update(['votes' => 1]);
+            ->where('id',$user->id)
+            ->update(['usn'=>$request->usn,'name'=>$request->name,'email'=>$request->email,'semester'=>$request->semester,'phone'=>$request->phone,'address'=>$request->address]);
   return redirect('/dashboard');
   }
 
