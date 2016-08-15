@@ -43,6 +43,10 @@ Route::get('/dashboard', function(){
   return redirect('/');
 });
 
+Route::get('/add/marks/1', 'MarksController@DisplayMarksForm');
+Route::post('/add/marks/1', 'MarksController@AddMarks');
+
+/*
 Route::get('/add/marks/{$term}', function($term){
   //$term=['1'=>'1st internal','2'=>'2nd internal','3'=>'3rd internal','4'=>'term end exam']
   switch ($term)
@@ -54,6 +58,6 @@ Route::get('/add/marks/{$term}', function($term){
     case 'profile': return view();
   }
 });
-
+*/
 Route::get('edit/profile','StudentController@EditProfile');
 Route::post('edit/profile','StudentController@EditProfileAddData');
