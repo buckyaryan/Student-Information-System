@@ -9,91 +9,27 @@
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/add/marks/1') }}">
                         {{ csrf_field() }}
-
-                        <div class="form-group{{ $errors->has('14mat11') ? ' has-error' : '' }}">
-                            <label for="usn" class="col-md-4 control-label">14MAT11</label>
+                        @foreach ($sub as $subs )
+                          <?php
+                            $subject=$subs;
+                            $temp=explode('x',$subject);
+                            //var_dump($temp);
+                            $showName=$temp['1'];
+                          ?>
+                        <div class="form-group{{ $errors->has('$subject') ? ' has-error' : '' }}">
+                            <label for="{{ $subject }}" class="col-md-4 control-label">{{ strtoupper($showName) }}</label>
 
                             <div class="col-md-6">
-                                <input id="usn" type="text" class="form-control" name="usn" value="{{$user->usn}}">
+                                <input id="{{ $subject }}" type="text" class="form-control" name="{{ $subject }}" value="{{ old('$subject') }}">
 
-                                @if ($errors->has('usn'))
+                                @if ($errors->has('$subject'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('usn') }}</strong>
+                                        <strong>{{ $errors->first('$subject') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
-
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Full Name</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" value="{{$user->name}}">
-
-                                @if ($errors->has('name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{$user->email}}">
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('semester') ? ' has-error' : '' }}">
-                            <label for="semester" class="col-md-4 control-label">Semester</label>
-
-                            <div class="col-md-6">
-                                <input id="semester" type="text" class="form-control" name="semester" value="{{$user->semester}}">
-
-                                @if ($errors->has('semester'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('semester') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Phone Number</label>
-
-                            <div class="col-md-6">
-                                <input id="phone" type="text" class="form-control" name="phone" value="{{$user->phone}}">
-
-                                @if ($errors->has('phone'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('phone') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
-                            <label for="addres" class="col-md-4 control-label">Address</label>
-
-                            <div class="col-md-6">
-                                <input id="address" type="text" class="form-control" name="address" value="{{$user->address}}">
-
-                                @if ($errors->has('address'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('adderss') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
+                        @endforeach
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
