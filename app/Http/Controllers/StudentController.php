@@ -71,32 +71,25 @@ class StudentController extends Controller
             'password' => 'required|min:6'
         ]);
         // if validation fails send back to login page
-        if ($validator->fails()) {
-            echo "fail";
-            //return redirect('/login')
-                      //  ->withErrors($validator)
-                    //    ->withInput();
+        if ($validator->fails())
+        {
+            return redirect('/student/login')
+                       ->withErrors($validator)
+                       ->withInput();
         }
     //do login
     $user = Student::where('usn', $request->usn);
-  //  echo "$user->password";
-
     if (Auth::attempt(['usn' => $request->usn, 'password' => $request->password]))
     {
         //$value = $request->session()->put('id',$user->id);
         echo "logged in";
-
         $user = Student::where('usn', $request->usn)->get();
-        //echo $user->id;
-
-        //session(['key' => $user->id]);
-
         return redirect('/dashboard');
     }
     else
     {
         //echo "failed";
-        return redirect('/login')
+        return redirect('/student/login')
                       ->withErrors($request)
                       ->withInput();
     }
