@@ -12,7 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    if(Auth::check())
+    {
+      return redirect('/dashboard');
+    }
+      return view('welcome');
 });
 // to login
 Route::get('/student/login', function(){
@@ -33,5 +37,20 @@ Route::get('/logout', 'StudentController@Logout' );
 // to register the user
 Route::auth();
 Route::get('/dashboard', function(){
-    return view('dashboard');
+    return view('home');  //temporary dashboard
 });
+
+Route::get('/add/marks/{$term}', function($term){
+  //$term=['1'=>'1st internal','2'=>'2nd internal','3'=>'3rd internal','4'=>'term end exam']
+  switch ($term)
+  {
+    case '1': return view();
+    case '2': return view();
+    case '3': return view();
+    case '4': return view();
+    case 'profile': return view();
+  }
+});
+
+Route::get('edit/profile','StudentController@EditProfile');
+Route::post('edit/profile','StudentController@EditProfileAddData');

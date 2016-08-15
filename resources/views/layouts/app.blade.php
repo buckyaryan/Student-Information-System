@@ -47,7 +47,24 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
+                  @if (Auth::guest())
                     <li><a href="{{ url('/') }}">Home</a></li>
+                  @else
+                    <li><a href="{{ url('/dashboard') }}">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            Mark <span class="caret"></span>
+                        </a>
+
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ url('/add/marks/1') }}">Ist internal</a></li>
+                            <li><a href="{{ url('/add/marks/2') }}">IInd internal</a></li>
+                            <li><a href="{{ url('/add/marks/3') }}">IIIrd internal</a></li>
+                            <li><a href="{{ url('/add/marks/4') }}">Semester End</a></li>
+                        </ul>
+                    </li>
+
+                  @endif
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -63,6 +80,7 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ url('/edit/profile') }}">Edit Profile</a></li>
                                 <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                             </ul>
                         </li>
