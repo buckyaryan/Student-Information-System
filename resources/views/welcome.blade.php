@@ -8,7 +8,7 @@
                 <div class="panel-heading">Welcome</div>
 
                 <div class="panel-body">
-                    Please Login or Register to Continue.
+                    This is a student information system. 
                 </div>
             </div>
         </div>
