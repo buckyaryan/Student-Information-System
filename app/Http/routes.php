@@ -44,10 +44,10 @@ Route::get('/add/marks/{$term}', function($term){
   //$term=['1'=>'1st internal','2'=>'2nd internal','3'=>'3rd internal','4'=>'term end exam']
   switch ($term)
   {
-    case '1': return view();
-    case '2': return view();
-    case '3': return view();
-    case '4': return view();
+    case '1': return view('');
+    case '2': return view('');
+    case '3': return view('');
+    case '4': return view('');
     case 'profile': return view();
   }
 });
