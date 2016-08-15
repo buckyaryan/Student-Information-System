@@ -43,8 +43,13 @@ Route::get('/dashboard', function(){
   return redirect('/');
 });
 
+Route::get('edit/profile','StudentController@EditProfile');
+Route::post('edit/profile','StudentController@EditProfileAddData');
+
 Route::get('/add/marks/1', 'MarksController@DisplayMarksForm');
 Route::post('/add/marks/1', 'MarksController@AddMarks');
+
+Route::get('/view/marks', 'MarksController@DisplayMarks');
 
 /*
 Route::get('/add/marks/{$term}', function($term){
@@ -59,5 +64,3 @@ Route::get('/add/marks/{$term}', function($term){
   }
 });
 */
-Route::get('edit/profile','StudentController@EditProfile');
-Route::post('edit/profile','StudentController@EditProfileAddData');
