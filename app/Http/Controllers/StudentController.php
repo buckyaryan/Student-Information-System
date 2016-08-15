@@ -16,6 +16,8 @@ use App\Http\Controllers\Controller;    // to use the Controller class
 
 use DB;                                 // to acess to the database
 
+use App\Http\Controllers\View;          // to acess the views functions
+
 class StudentController extends Controller
 {
   // adding new student
@@ -89,7 +91,7 @@ class StudentController extends Controller
 
         //session(['key' => $user->id]);
 
-        return redirect('/profile');
+        return redirect('/dashboard');
     }
     else
     {
@@ -118,6 +120,50 @@ class StudentController extends Controller
     $user = Student::where('id', session('key'));
     return view('about',['user'=>$user]);
   //
+  }
+
+  // function to edit the profile of the Student
+  public function EditProfile(Request $request)
+  {
+    $user = Auth::user();
+    //var_dump($user);
+    //echo $user->usn;
+    return view('profile',['user'=>$user]);
+  }
+
+  public function EditProfileAddData(Request $request)
+  {
+  // Validate the request...
+  $validator = Validator::make($request->all(), [
+          'name' => 'required|max:255',
+          'email' => 'required|email|max:255',
+          'usn' => 'required|max:10',
+          'phone' => 'required|min:10|max:20',
+          'address' => 'required|max:255',
+      ]);
+      // if validation fails send back to register page
+      if ($validator->fails()) {
+          return redirect('/edit/profile')
+                      ->withErrors($validator)
+                      ->withInput();
+      }
+  // storing the data
+  $user = new Student;
+
+  // getting the users data
+  $user->name = $request->name;
+  $user->usn = $request->usn;
+  $user->email = $request->email;
+  $user->phone = $request->phone;
+  $user->semester = $request->semester;
+  $user->address = $request->address;
+
+  $cuser = Auth::user();
+  //saving the data into table
+  DB::table('students')
+            ->where('id')
+            ->update(['votes' => 1]);
+  return redirect('/dashboard');
   }
 
 }
