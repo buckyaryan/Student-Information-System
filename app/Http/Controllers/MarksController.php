@@ -65,4 +65,12 @@ class MarksController extends Controller
         $sub=array('x14mat11','x14phy12','x14civ13','x14eme14','x14ele15','x14wsl16','x14phyl17','x14cip18');
         return View('marks',['sub'=>$sub]);
     }
+
+    public function DisplayMarks()
+    {
+        $user=Auth::user();
+        $sub_sem_1=array('x14mat11','x14phy12','x14civ13','x14eme14','x14ele15','x14wsl16','x14phyl17','x14cip18');
+        $marks_1_1=DB::table('marks_1_1')->where('sid', '=', $user->id)-first();
+        return View('showmarks',['sub'=>$sub_sem_1,'marks_1_1'=>$marks_1_1]);
+    }
 }
