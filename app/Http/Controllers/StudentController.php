@@ -25,12 +25,13 @@ class StudentController extends Controller
   {
   // Validate the request...
   $validator = Validator::make($request->all(), [
-          'name' => 'required|max:255',
-          'email' => 'required|email|max:255|unique:students',
-          'password' => 'required|min:6|confirmed',
-          'usn' => 'required|max:10|unique:students',
-          'phone' => 'required|min:10|max:20|unique:students',
-          'address' => 'required|max:255',
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6|confirmed',
+            'usn' => 'required|max:10|unique:students',
+            'phone' => 'required|min:10|max:20|unique:students',
+            'address' => 'required|max:255',
+            'semester' => 'required',
       ]);
       // if validation fails send back to register page
       if ($validator->fails()) {
@@ -40,7 +41,6 @@ class StudentController extends Controller
       }
   // storing the data
   $user = new Student;
-
   // getting the users data
   $user->name = $request->name;
   $user->usn = $request->usn;
@@ -53,11 +53,11 @@ class StudentController extends Controller
   //saving the data into table
   $user->save();
   if($user->save())
-    {
+  {
       echo "data added to table";
-    }
-
-  //return redirect('/profile');
+      return redirect('/dashboard');
+  }
+  return redirect('/student/login');
   }
 
 
