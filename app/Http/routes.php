@@ -31,13 +31,13 @@ Route::get('/register', function(){
 Route::post('/register', 'StudentController@AddNewStudent' );
 
 // to logout
-Route::auth();
 Route::get('/logout', 'StudentController@Logout' );
 
 // to register the user
-Route::auth();
 Route::get('/dashboard', function(){
+  if(Auth::check())
     return view('home');  //temporary dashboard
+  return redirect('/');
 });
 
 Route::get('/add/marks/{$term}', function($term){
