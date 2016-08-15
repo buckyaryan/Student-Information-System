@@ -19,6 +19,9 @@ Route::get('/', function () {
       return view('welcome');
 });
 // to login
+Route::get('/login', function() {
+    return Redirect('/student/login');
+});
 Route::get('/student/login', function(){
     return view('studentlogin');
 });
@@ -26,7 +29,7 @@ Route::post('/student/login', 'StudentController@doLogin' );
 
 // to register the user
 Route::get('/register', function(){
-    return view('register');
+    return view('auth.register');
 });
 Route::post('/register', 'StudentController@AddNewStudent' );
 
